@@ -1,0 +1,235 @@
+---
+title: "Workout 1"
+author: "Jane Zhang"
+date: "March 10, 2019"
+output: github_document
+---
+
+```{r}
+library(dplyr)
+library(ggplot2)
+```
+```{r echo=FALSE}
+kevin <- read.csv(file ="../data/kevin-durant.csv", stringsAsFactors = FALSE)
+klay <- read.csv(file ="../data/klay-thompson.csv",stringsAsFactors = FALSE)
+andre <- read.csv(file ="../data/andre-iguodala.csv",stringsAsFactors = FALSE)
+stephen <- read.csv(file ="../data/stephen-curry.csv",stringsAsFactors = FALSE)
+graymond <- read.csv(file ="../data/draymond-green.csv",stringsAsFactors = FALSE)
+kevin$name <- c("Kevin Durant")
+klay$name <- c("Klay Thompson")
+andre$name <- c("Andre Iguodala")
+stephen$name <- c("Stephen Curry")
+graymond$name <- c("Draymond Green")
+kevin$shot_made_flag[kevin$shot_made_flag=="n"] <- c("shot_no")
+kevin$shot_made_flag[kevin$shot_made_flag=="y"] <- c("shot_yes")
+klay$shot_made_flag[klay$shot_made_flag=="n"] <- c("shot_no")
+klay$shot_made_flag[klay$shot_made_flag=="y"] <- c("shot_yes")
+andre$shot_made_flag[andre$shot_made_flag=="n"] <- c("shot_no")
+andre$shot_made_flag[andre$shot_made_flag=="y"] <- c("shot_yes")
+stephen$shot_made_flag[stephen$shot_made_flag=="n"] <- c("shot_no")
+stephen$shot_made_flag[stephen$shot_made_flag=="y"] <- c("shot_yes")
+graymond$shot_made_flag[graymond$shot_made_flag=="n"] <- c("shot_no")
+graymond$shot_made_flag[graymond$shot_made_flag=="y"] <- c("shot_yes")
+kevin$minute <- (12*kevin$period) - kevin$minutes_remaining
+andre$minute <- (12*andre$period) - andre$minutes_remaining
+klay$minute <- (12*klay$period) - klay$minutes_remaining
+graymond$minute <- (12*graymond$period) - graymond$minutes_remaining
+stephen$minute <- (12*stephen$period) - stephen$minutes_remaining
+combine <- rbind(andre,graymond,kevin,klay,stephen)
+```
+
+#5.1) Effective Shooting Percentage
+```{r}
+shots_data <- read.table(file="../data/shots-data.csv",header = TRUE,sep=",")
+pt2 <- shots_data[shots_data$shot_type=="2PT Field Goal",]
+table_pt2 <- arrange(
+            summarise(group_by(pt2,name),
+                  total=length(shot_type),
+                  made = sum(shot_made_flag == "shot_yes"),
+                  perc_made =made/total ),
+          desc(perc_made))
+```
+```{r}
+pt3 <- shots_data[shots_data$shot_type=="3PT Field Goal",]
+table_pt3 <- arrange(
+              summarise(group_by(pt3,name), 
+                        total=length(shot_type), 
+                        made = sum(shot_made_flag == "shot_yes"), 
+                        perc_made =made/total ),
+              desc(perc_made))
+```
+
+```{r}
+
+table_pt_total <- arrange(
+            summarise(group_by(shots_data,name), 
+                      total=length(shot_type),
+                      made = sum(shot_made_flag == "shot_yes"),
+                      perc_made =made/total ),
+            desc(perc_made))
+```
+
+
+#5.2) Report
+##I.	Introduction
+Winning his first MVP award in season 2015 and let the league, Golden State Warrior (GSW), to their first championship since 1975, Curry has shown himself directly and become a legend by breaking records one after one. Becoming the focus of team, he continued impressing us by breaking the record of the most wins in an NBA season, and GSW made it to the 2016 NBA Finals. Beside Curry's legendary performance, how does other players' score this year? Why did Curry won the annimous and how did he earn the second winning score this year? Let's do some analysis about the scoring data of Stephen Curry, Andre Iguodala, Kevin Durant, Stephen Curry, Klay Thompson, and Draymond Green. 
+
+***
+
+##II.	Motivation
+By analyzing and comparing Stephen Curry and his teammates' performance, find out what skills that make Curry an MVP and who else contributed efficient shootings to the team.  
+
+***
+
+##III.	Background of Golden State Warrior and Stephen Curry
+
+###1.	
+Golden State Warriors, American professional basketball team based in Oakland, California, that plays in the Western Conference of the National Basketball Association (NBA). The Warriors have won five NBA championships (1956, 1975, 2015, 2017, and 2018) and one Basketball Association of America (BAA) title (1947). 
+
+###2.	
+
+Stephen Curry, is a professional American basketball player with the Golden State Warriors. The son of former NBA player Dell Curry, Stephen first garnered national attention for his impressive play at Davidson College. He was drafted in 2009 by Golden State and eventually developed into one of pro basketball's top players with his stellar shooting skills. After garnering Most Valuable Player honors and helping the Warriors win the NBA championship in 2015, Curry led the team to a league-record 73 wins the following season. In May 2016, Curry became the first person to be named MVP by unanimous vote in NBA history.  
+
+***
+
+##IV. Data and Analysis 
+
+###1)	Shooting locations of shots
+Where do players usually make their shot attempt? Let's take a look at a faceting scatter plot for each players, showing all the position of their attempts relative to the basketball court.
+The points in Klay Thompson and Stephen Curry's scatterplots are apparently denser than the other three. This indicating that Stephen Curry and Klay Thompson made the most attempts. Compared to Thompson, Curry make more attempts in the three points field, and the furthest successful shot Curry made was further than Thompson.  Kevin Durant and Draymond Green also make a lot attempts, and Green's attempts is less than Durant.
+
+
+```{r echo=FALSE, out.width="100%", fig.aligh = "center"}
+library(knitr)
+library(ggplot2)
+
+
+knitr::include_graphics(
+        path ="../images/gsw-shot-charts.png")
+```
+
+
+###2)	Points per shot  
+
+Given the data of season 2016, I generated three tables for the shots made in two-point field, three-point field, and a table displaying their points per shot.  
+
+```{r "2PT Effective Shooting % by Player"}
+table_pt2
+```
+```{r "3PT Effective Shooting % by Player"}
+table_pt3
+```
+```{r "Effective Shooting % by Player"}
+table_pt_total
+```
+From the shots in two-points field, we know that Andre Iguodala has the highest successful percentage of making shot in two points field, followed by Durant. Durant scored the highest total points for two-point shooting, followed by Thompson and Curry.
+
+From the shots in three-points filed, it shows that Thompson has the highest successful percentage of making shots in three-points field, followed by Curry and Durant. Curry scored the highest total points for three-point shooting, followed by Thompson and Durant.
+
+
+```{r}
+total_2pts <- (table_pt2$made)*2
+total_3pts <- (table_pt3$made)*3
+total_3pts <- total_3pts[c(4,3,2,1,5)]
+total_pts <- total_2pts+total_3pts
+total_atempt <- table_pt_total[c(2,1,4,3,5),2]
+ppt <- total_pts/total_atempt
+ppt$name <- table_pt2$name
+ppt <- ppt[,c(2,1)]
+colnames(ppt) <- c("name","points_per_shot")
+ppt
+```
+Then I calculated the points per shot for each of them. Durant has the highest points per shot, and Iguodala ranks the second, followed by Curry.
+
+Even Curry doesn't have the highest points per shot nor the highest successful percentage of making shots, overall he's still one of the top three among this five players sample. Thompson and Durant are also very efficient players with excellent skills. Having average 1.15 points per shot and relatively high shooting percentage making him a strong candidate of being an MVP. what else elements make him a MVP? According to 
+According to the article, "the numbers Steph Curry incredible MVP season", the author said, "Quantified shot quality, or QSQ, accounts for shot location, defender location and what type of shot it was (catch-and-shoot, off the dribble, etc.), among other variables. We can use this same metric to identify shots off passes, too, and no player created higher-quality looks for his teammates than Steph Curry." So let's analyze the median of shooting distance. Besides points per shooting, there are other elements that our audiance take into consideration when they vote.
+
+
+###3)	Median of shot distance  
+
+In part 1) we took a look at where their shooting locations were at by plotting facet scatter plots, now lets actually calculate the numerical average shooting distance and compare them. By calculating the minimum and maximum shooting distance of each players' shots' data, we get the shooting distance information of them as shown in the following table. 
+```{r}
+distance_each_player <- summarise( 
+                          group_by( select(combine, c(name,shot_distance)), name),
+                          median_dis = median(shot_distance),
+                          max_dis = max(shot_distance))
+distance_each_player
+```
+From the table, we can easily see that Curry has the highest median shooting distance and highest maximum distance, which is 23, and 71. This demonstrate how brilliantly Curry plays and he created such amazing shots that makes the game more fun to watch. He shoots from challenging distance with relatively high points per shot, which explains why he has gained so much spotlight.  
+
+
+On the other hand, Thompson has the second highest median shooting distance
+Next, lets look at some data about their shooting types.
+
+
+###4)	Action types  
+
+The following tables individually count the top five frequently used actions of each players.  
+
+```{r}
+action_types_kevin <- kevin %>% filter(shot_made_flag == "shot_yes") %>% select(name,action_type) %>% group_by(name)
+count_kevin <- count(action_types_kevin, vars=action_type)
+count_kevin <- arrange(count_kevin, desc(n))
+count_kevin
+
+action_types_klay <- klay %>% filter(shot_made_flag == "shot_yes")%>% select(name,action_type) %>% group_by(name)
+count_klay <- count(action_types_klay, vars=action_type)
+count_klay <- arrange(count_klay, desc(n))
+
+action_types_andre <- andre %>% filter(shot_made_flag == "shot_yes")%>% select(name,action_type) %>% group_by(name)
+count_andre <- count(action_types_andre, vars=action_type)
+count_andre <- arrange(count_andre, desc(n))
+
+action_types_stephen <- stephen %>% filter(shot_made_flag == "shot_yes")%>% select(name,action_type) %>% group_by(name)
+count_stephen <- count(action_types_stephen, vars=action_type)
+count_stephen <- arrange(count_stephen, desc(n))
+
+action_types_draymond <- graymond %>% filter(shot_made_flag == "shot_yes")%>% select(name,action_type) %>% group_by(name)
+count_draymond <- count(action_types_draymond, vars=action_type)
+count_draymond <- arrange(count_draymond, desc(n))
+
+head_5_kevin <- head(count_kevin)
+head_5_klay <- head(count_klay)
+head_5_andre <- head(count_andre)
+head_5_stephen <- head(count_stephen)
+head_5_draymond <- head(count_draymond)
+head_5_andre
+head_5_draymond
+head_5_kevin
+head_5_klay
+head_5_stephen
+
+```
+The following horizontal faceted bar charts listing the frequencies of each players' actions.  
+
+```{r fig1, fig.height = 7, fig.width = 10, fig.align = "center"}
+ggplot(data=filter(combine,shot_made_flag =="shot_yes"), aes(x=action_type)) + geom_bar() +facet_grid(~name)+ggtitle("Frequencies of each Players' Actions") +coord_flip()
+```
+The most frequently used action is overall jump shot, and the second frequently used action is pullup jump shot. Both Kevin Durant, Klay Thompson and Stephen Curry have highest frequencies of using jump shot, Pullup jump shot, and driving layup shot. While Thompson has the most frequencies of using jump shot and pullup shot, and Curry ranks the second place. 
+
+###5)	Shots distribution by minutes  
+
+I generated a bar chart to show the distribution of successful shots by minutes faceting by players' names. 
+```{r fig2, fig.height = 7, fig.width = 15, fig.align = "center"}
+ggplot(data = filter(combine, shot_made_flag == "shot_yes"), aes(x=minute)) + geom_bar() + facet_grid(~name)+ ggtitle("Shots distribution by minuts for each player")
+```
+From the bar charts, it's obvious that Curry shoots a lot more at the first 10 minutes and between 20 to 35 minutes than other four players. Thompson and Durant have high frequencies of shootings, but overall slightly lower than Curry. And in the last section, Curry have high shooting frequencies, showing that he led the team to win.
+
+##V.	Conclusion  
+
+Curry's overall shooting skills are strong, and have high shooting quality, such as long-range shooting, relatively high scores per point and high shooting frequencies in first and last section of the game, which audience love. Other than Curry, Thompson and Durant's overall shooting skills are efficient and strong too. 
+
+##IV.	Reference
+
+1. _Stephen Curry wins MVP for second straight_  
+
+season"http://www.espn.com/nba/story/_/id/15499690/stephen-curry-golden-state-warriors-first-unanimous-most-valuable-player  
+
+2. _the numbers Steph Curry incredible MVP season_  
+
+http://www.espn.com/espn/feature/story/_/id/15492948/the-numbers-steph-curry-incredible-mvp-season  
+
+3. _Golden State Warriors_  
+
+https://www.britannica.com/topic/Golden-State-Warriors
+
