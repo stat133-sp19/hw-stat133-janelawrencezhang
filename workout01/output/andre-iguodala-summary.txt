@@ -1,4 +1,4 @@
-  team_name          game_date             season         period      minutes_remaining
+ team_name          game_date             season         period      minutes_remaining
  Length:371         Length:371         Min.   :2016   Min.   :1.000   Min.   : 0.000   
  Class :character   Class :character   1st Qu.:2016   1st Qu.:2.000   1st Qu.: 1.000   
  Mode  :character   Mode  :character   Median :2016   Median :2.000   Median : 4.000   
