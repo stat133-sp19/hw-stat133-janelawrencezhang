@@ -9,7 +9,19 @@
   
 library(shiny)
 library(ggplot2)
-# Define UI for application that draws a histogram
+
+
+future_value <- function(amount, rate, years){
+  return(amount*(1+rate)^years)
+}
+annuity <- function(contrib, rate, years){
+  return( contrib*(((1+rate)^years -1)/rate) )
+}
+growing_annuity <- function(contrib, rate, growth, years){
+  return( contrib*(((1+rate)^years-(1+growth)^years)/(rate-growth)))
+  
+} 
+
 ui <- fluidPage(
    
    # Application title
@@ -35,7 +47,7 @@ ui <- fluidPage(
       #mainPanel(
          titlePanel("Timeline"),
          plotOutput("timeline"),
-         titlePanel("Balance"),
+         titlePanel("Balances"),
          verbatimTextOutput("balance")
       #)
    )
@@ -48,16 +60,6 @@ server <- function(input, output) {
    output$timeline <- renderPlot({
       #generate the table for timeline
  
-     future_value <- function(amount, rate, years){
-       return(amount*(1+rate)^years)
-     }
-     annuity <- function(contrib, rate, years){
-       return( contrib*(((1+rate)^years -1)/rate) )
-     }
-     growing_annuity <- function(contrib, rate, growth, years){
-       return( contrib*(((1+rate)^years-(1+growth)^years)/(rate-growth)))
-       
-     } 
      
      modalities <- data.frame(year = 0:input$yr,
                               no_contrib = rep(NA, (input$yr+1)),
@@ -79,12 +81,12 @@ server <- function(input, output) {
      data$type_f <- factor(data$modes,levels = c("No Contribution","Fixed Contribution ($2,000)","Growing Contribution ($2,000 at 4%)"))
      data$colors <- rep(c("#FF0000","#228B22","#000080"),each = input$yr+1)
      if (input$facet){
-       ggplot(data = data, aes(x = year,y=balance,group=modes,col=colors)) + geom_line()+facet_grid(~type_f)+ ggtitle("Three modes of investing") + geom_point(size=0.1)+
-         geom_area(fill=data$colors,alpha=0.2)+
+       ggplot(data = data, aes(x = year,y=balance,group=modes,col=colors)) + geom_line()+facet_grid(~type_f)+ ggtitle("Three modes of investing") + geom_point(size=2)+
+         geom_area(fill=data$colors,alpha=0.2)+ 
          scale_color_manual(name = "modes",labels = c("growing_contrib","fixed_contrib","no_contrib"), values = c("#000080","#228B22","#FF0000"))
      }else{
-       ggplot(data = data, aes(x = year,y=balance,group=modes,col=colors)) + geom_line()+ ggtitle("Three modes of investing")+ geom_point(size=0.1)+
-         scale_color_manual(name = "modes",labels = c("growing_contrib","fixed_contrib","no_contrib"), values = c("#000080","#228B22","#FF0000"))
+       ggplot(data = data, aes(x = year,y=balance,group=modes,col=colors)) + geom_line()+ ggtitle("Three modes of investing")+ geom_point(size=2)+
+         scale_color_manual(name = "modes",labels = c("growing_contrib","fixed_contrib","no_contrib"), values = c("#000080","#228B22","#FF0000")) 
      }
      
      
@@ -93,15 +95,7 @@ server <- function(input, output) {
      
    })
    output$balance <- renderPrint({
-     future_value <- function(amount, rate, years){
-                          return(amount*(1+rate)^years)
-     }
-    annuity <- function(contrib, rate, years){
-                          return( contrib*(((1+rate)^years -1)/rate) )
-   }
-    growing_annuity <- function(contrib, rate, growth, years){
-                          return( contrib*(((1+rate)^years-(1+growth)^years)/(rate-growth)))
-   }
+    
    modalities <- data.frame(year = 0:input$yr,
                             no_contrib = rep(NA, (input$yr+1)),
                             fixed_contrib = rep(NA, (input$yr+1)),
