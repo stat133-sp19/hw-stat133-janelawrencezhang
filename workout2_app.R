@@ -44,12 +44,12 @@ ui <- fluidPage(
 )  ,
       
       # Show a plot of the generated distribution
-      #mainPanel(
+      mainPanel(width = 12,
          titlePanel("Timeline"),
          plotOutput("timeline"),
          titlePanel("Balances"),
          verbatimTextOutput("balance")
-      #)
+      )
    )
 
 
@@ -86,7 +86,7 @@ server <- function(input, output) {
          scale_color_manual(name = "modes",labels = c("growing_contrib","fixed_contrib","no_contrib"), values = c("#000080","#228B22","#FF0000"))
      }else{
        ggplot(data = data, aes(x = year,y=balance,group=modes,col=colors)) + geom_line()+ ggtitle("Three modes of investing")+ geom_point(size=2)+
-         scale_color_manual(name = "modes",labels = c("growing_contrib","fixed_contrib","no_contrib"), values = c("#000080","#228B22","#FF0000")) 
+         scale_color_manual(name = "modes",labels = c("growing_contrib","fixed_contrib","no_contrib"), values = c("#000080","#228B22","#FF0000")) +theme_bw()
      }
      
      
