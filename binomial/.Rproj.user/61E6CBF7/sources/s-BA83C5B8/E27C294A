@@ -1,0 +1,22 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1556400584140.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "E27C294A",
+    "lastKnownWriteTime" : 1556400322,
+    "last_content_update" : 1556400322,
+    "path" : "C:/Users/piper/Documents/school/berkeley/Spring_2019/STAT_133_winter/workout3/cointoss/R/toss.R",
+    "project_path" : null,
+    "properties" : {
+        "cursorPosition" : "35,0",
+        "scrollLine" : "0"
+    },
+    "relative_order" : 3,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

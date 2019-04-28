@@ -1,0 +1,10 @@
+{
+    "dialog-state" : {
+        "caseSensitive" : false,
+        "filePatterns" : [
+        ],
+        "path" : "C:/Users/piper/Documents/school/berkeley/Spring_2019/STAT_133_winter/workout3/binomial",
+        "query" : "check_",
+        "regex" : false
+    }
+}
