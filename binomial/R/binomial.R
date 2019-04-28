@@ -175,13 +175,11 @@ bin_distribution <- function(trials,prob){
 }
 
 
-
 #' @export
 plot.bindis <- function(x){
-  library(ggplot2)
-  graph <- ggplot(data=x,aes(x=factor(success),y=probability)) +
-    geom_bar(stat='identity',fill="grey") +theme_light()+
-    scale_x_discrete(breaks=0:max(x$success), labels=0:max(x$success) ) + xlab("successes")
+  graph <- ggplot2::ggplot(data=x,aes(x=factor(success),y=probability)) +
+    ggplot2::geom_bar(stat='identity',fill="grey") +ggplot2::theme_light()+
+    ggplot2::scale_x_discrete(breaks=0:max(x$success), labels=0:max(x$success) ) + ggplot2::xlab("successes")
   return(graph)
 }
 
@@ -215,10 +213,10 @@ bin_cumulative <- function(trials,prob){
 
 #' @export
 plot.bincum <- function(x){
-  library(ggplot2)
-  graph <- ggplot(data=x,aes(x=success,y=cumulative))+
-    geom_line()+geom_point(shape=1,size=4)+theme_bw()+
-    ylab("probability")+xlab("successes")
+
+  graph <- ggplot2::ggplot(data=x,aes(x=success,y=cumulative))+
+    ggplot2::geom_line()+ggplot2::geom_point(shape=1,size=4)+ggplot2::theme_bw()+
+    ggplot2::ylab("probability")+ggplot2::xlab("successes")
   return(graph)
 }
 

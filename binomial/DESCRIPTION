@@ -15,3 +15,5 @@ Suggests: knitr,
     testthat,
     ggplot
 VignetteBuilder: knitr
+Imports: 
+    ggplot2
