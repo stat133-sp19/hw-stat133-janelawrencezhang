@@ -52,7 +52,7 @@ bin_distri
 ## 4) Plot of distribution of probabilities.
 You can plot the histogram of distribution by using `plot()`
 ```{r}
-library(ggplot2)
+
 plot(bin_distri)
 
 ```
