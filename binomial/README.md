@@ -23,7 +23,7 @@
 
 This package has been developed to practice how to use concepts of creation of an R package to build a package.  
 
-##Installation  
+<h2>Installation  
 
 ***
 ```
