@@ -1,4 +1,5 @@
-##Overview
+##Overview  
+
 ***
 `"binomial"` is a minimal R package that provides functions to get measures and visualization of a binomial variable.  
   
@@ -15,12 +16,14 @@
 * `bin_skewness()`caculates the skewness of a binomial variable.  
 * `bin_kurtosis()`caculates the kurtosis of a binomial variable.  
 
-##Motivation
+##Motivation  
+
 ***
 
 This package has been developed to practice how to use concepts of creation of an R package to build a package.  
 
-##Installation
+##Installation  
+
 ***
 `# development version from GitHub:`
 `#install.packages("devtools") `
@@ -32,7 +35,8 @@ This package has been developed to practice how to use concepts of creation of a
 `devtools::install_github("foldername/binomial", build_vignettes = TRUE)`
 
 
-##Usage  
+##Usage   
+
 ***
 `bin_choose(n=6,k=2)`  
   
