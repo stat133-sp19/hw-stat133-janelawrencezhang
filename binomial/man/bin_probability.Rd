@@ -19,3 +19,9 @@ the calculated probability according to the success, trials and prob inputs
 \description{
 calculate the probability of a binomial distribution which has success, trials, and prob.
 }
+\examples{
+bin_probability(success =2, trials = 5, prob = 0.5)
+0.3125
+bin_probability(success =55, trials = 100, prob = 0.45)
+0.01075277
+}
