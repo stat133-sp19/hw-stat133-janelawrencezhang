@@ -23,6 +23,7 @@ test_that("aux_variance with valid  parameters",{
 test_that("aux_mode with valid  parameters",{
   expect_equal(aux_mode(5,0.5),c(2,3))
   expect_equal(aux_mode(5,0),0)
+  expect_equal(aux_mode(9,0.3),c(2,3))
   expect_equal(aux_mode(5,1),5)
   expect_equal(aux_mode(5,0.4),2)
   expect_error(aux_mode(-5,0.8))
