@@ -18,6 +18,7 @@ return a dataframe listing all cumulative probabilities of the binomial distribu
 Calculating cumulative probabilities for a binomial distribution
 }
 \examples{
+bin_cumulative(5,0.5)
  success probability cumulative
 1       0     0.03125    0.03125
 2       1     0.15625    0.18750

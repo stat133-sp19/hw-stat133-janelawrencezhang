@@ -1,6 +1,7 @@
 <h2> Overview  
 
 ***
+
 `"binomial"` is a minimal R package that provides functions to get measures and visualization of a binomial variable.  
   
 * `bin_choose()`calculates the binomial choosing factor.  
@@ -27,19 +28,20 @@ This package has been developed to practice how to use concepts of creation of a
 
 ***
 ```
-# development version from GitHub:
-#install.packages("devtools") 
+"development version from GitHub:"
+install.packages("devtools") 
 
-# install "binomial" (without vignettes)
+"install "binomial" (without vignettes)"
 devtools::install_github("foldername/binomial")
 
-# install "cointoss" (with vignettes)
+"install "binomial" (with vignettes)"
 devtools::install_github("foldername/binomial", build_vignettes = TRUE)
 ```
 
 <h2>Usage   
 
 ***
+
 ```
 bin_choose(n=6,k=2)  
   
