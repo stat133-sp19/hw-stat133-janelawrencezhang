@@ -106,8 +106,6 @@ aux_mode <- function(trials,prob){
   }
   # else if((trials*prob+prob)%%1==0){
     else if(!grepl("\\D",as.character(trials*prob+prob))){
-    # num <- as.numeric(as.character(trials*prob+prob))
-    # m = as.integer(num)
       m <- trials*prob+prob
     return(c(m-1,m))
   }else{
